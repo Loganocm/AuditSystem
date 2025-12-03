@@ -20,8 +20,11 @@ VoyageVista is a Full Stack enterprise application designed to manage cruise iti
 ## How to Run
 1.  Clone the repository.
 2.  Backend (Gradle): `./gradlew bootRun` (Linux/Mac) or `gradlew.bat bootRun` (Windows). The API runs on http://localhost:8080.
-3.  Frontend (Vite): In `frontend/`, run `npm install` then `npm run dev` (served at http://localhost:3000).
-4.  Visit the app at `http://localhost:3000`.
+3.  Frontend (Vite): In `frontend/`, run `npm install` then `npm run dev` (served at http://localhost:3000`).
+4.  API Base URL for the frontend: The app now reads `VITE_API_URL` and falls back to your deployed backend URL `https://auditsystem-jwb6.onrender.com` if not set.
+   - Local dev (optional): create `frontend/.env` with `VITE_API_URL=http://localhost:8080`.
+   - Production hosting (Vercel/Netlify): set `VITE_API_URL` to your backend URL in project env settings.
+5.  Visit the app at `http://localhost:3000`.
 
 ## Docker (build, run, and push)
 - Build the image (from repo root):

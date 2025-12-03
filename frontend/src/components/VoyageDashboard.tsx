@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Voyage, AuditLog } from '../types';
 
+// Determine API base URL from env or fall back to deployed Render URL
+const API_BASE = import.meta.env.VITE_API_URL || 'https://auditsystem-jwb6.onrender.com';
+const api = axios.create({ baseURL: API_BASE });
+
 export const VoyageDashboard: React.FC = () => {
     const [voyages, setVoyages] = useState<Voyage[]>([]);
     const [logs, setLogs] = useState<AuditLog[]>([]);
     const [newShip, setNewShip] = useState('');
 
     const fetchData = async () => {
-        const voyageRes = await axios.get('http://localhost:8080/api/voyages');
-        const logRes = await axios.get('http://localhost:8080/api/audit-logs');
+        const voyageRes = await api.get('/api/voyages');
+        const logRes = await api.get('/api/audit-logs');
         setVoyages(voyageRes.data);
         setLogs(logRes.data);
     };
@@ -17,7 +21,7 @@ export const VoyageDashboard: React.FC = () => {
     useEffect(() => { fetchData(); }, []);
 
     const handleCreate = async () => {
-        await axios.post('http://localhost:8080/api/voyages', {
+        await api.post('/api/voyages', {
             shipName: newShip,
             departurePort: 'Port Canaveral',
             departureDate: new Date().toISOString().split('T')[0],

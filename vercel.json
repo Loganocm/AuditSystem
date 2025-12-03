@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "env": {
+    "VITE_API_URL": "https://auditsystem-jwb6.onrender.com"
+  },
+  "build": {
+    "env": {
+      "VITE_API_URL": "https://auditsystem-jwb6.onrender.com"
+    }
+  }
+}
