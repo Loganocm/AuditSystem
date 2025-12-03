@@ -19,8 +19,20 @@ VoyageVista is a Full Stack enterprise application designed to manage cruise iti
 
 ## How to Run
 1.  Clone the repository.
-2.  **Backend:** Navigate to `backend/` and run `./mvnw spring-boot:run`.
-3.  **Frontend:** Navigate to `frontend/`, run `npm install` then `npm start`.
-4.  Access the application at `http://localhost:3000`.
+2.  Backend (Gradle): `./gradlew bootRun` (Linux/Mac) or `gradlew.bat bootRun` (Windows). The API runs on http://localhost:8080.
+3.  Frontend (Vite): In `frontend/`, run `npm install` then `npm run dev` (served at http://localhost:3000).
+4.  Visit the app at `http://localhost:3000`.
+
+## Docker (build, run, and push)
+- Build the image (from repo root):
+  - PowerShell: `docker build -t shxde/voyagevista:latest .`
+- Run the container locally (maps port 8080):
+  - PowerShell: `docker run --rm -p 8080:8080 shxde/voyagevista:latest`
+- Test endpoints:
+  - `curl http://localhost:8080/api/voyages`
+  - `curl http://localhost:8080/api/audit-logs`
+- Push to Docker Hub (replace with your Docker ID if different):
+  - `docker login`
+  - `docker push shxde/voyagevista:latest`
 
 Instruction: Get this code into a GitHub repository named VoyageVista. This covers the "Java," "TypeScript," "Problem Solving," and specifically the "Audit Traceability" and "Voyage Itinerary" requirements of the job post.
