@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.6
 # ---- Build stage ----
 # Use JDK 17 base and the project's Gradle Wrapper (Gradle 9.2.1) for compatibility
 FROM eclipse-temurin:17-jdk AS build
@@ -17,8 +18,9 @@ RUN ./gradlew --version || true
 COPY src ./src
 
 # Build Spring Boot fat JAR (skip tests for faster image builds)
-# Use Gradle configuration cache for faster subsequent builds in CI
-RUN ./gradlew clean bootJar -x test --no-daemon --configuration-cache
+# Use Gradle configuration cache and persist Gradle caches between builds when BuildKit is available
+# Note: Removing 'clean' allows Gradle to reuse previous compilation results inside the layer/cache
+RUN --mount=type=cache,target=/root/.gradle ./gradlew bootJar -x test --no-daemon --configuration-cache -Dorg.gradle.configuration-cache.problems=warn
 
 # ---- Runtime stage ----
 FROM eclipse-temurin:17-jre
