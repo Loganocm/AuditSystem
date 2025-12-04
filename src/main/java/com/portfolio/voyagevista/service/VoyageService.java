@@ -57,14 +57,14 @@ public class VoyageService {
 
     public void deleteAllVoyages(String sessionId) {
         String sid = sessionOrDefault(sessionId);
-        voyageRepository.deleteAllBySessionId(sid);
+        voyageRepository.deleteBySessionId(sid);
         // Log a high-level system action for traceability
         logChange(sid, "Voyage", 0L, "DELETE_ALL", "Cleared all voyages");
     }
 
     public void deleteAllAuditLogs(String sessionId) {
         String sid = sessionOrDefault(sessionId);
-        auditLogRepository.deleteAllBySessionId(sid);
+        auditLogRepository.deleteBySessionId(sid);
         // Do not log here since logs are being cleared
     }
 
