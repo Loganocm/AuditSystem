@@ -15,6 +15,7 @@ VoyageVista is a Full Stack enterprise application designed to manage cruise iti
 ## Key Features
 * **Automated Audit Trails:** The system utilizes a service-layer interception pattern to log every mutation of the Voyage entity. This ensures compliance and historical tracking without requiring manual input from the user.
 * **Voyage Lifecycle Management:** Create and track voyage statuses (Scheduled -> Active -> Completed).
+* **Bulk Maintenance:** Clear all voyages and/or clear all audit logs via UI buttons (calls DELETE /api/voyages and DELETE /api/audit-logs).
 * **Type-Safe Frontend:** Built with TypeScript to ensure reliability and maintainability.
 
 ## How to Run

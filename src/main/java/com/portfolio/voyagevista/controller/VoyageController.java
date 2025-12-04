@@ -32,8 +32,20 @@ public class VoyageController {
         return ResponseEntity.ok(voyageService.updateVoyage(id, voyage));
     }
 
+    @DeleteMapping("/voyages")
+    public ResponseEntity<Void> deleteAllVoyages() {
+        voyageService.deleteAllVoyages();
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/audit-logs")
     public List<AuditLog> getAuditLogs() {
         return voyageService.getAuditLogs();
+    }
+
+    @DeleteMapping("/audit-logs")
+    public ResponseEntity<Void> deleteAllAuditLogs() {
+        voyageService.deleteAllAuditLogs();
+        return ResponseEntity.noContent().build();
     }
 }

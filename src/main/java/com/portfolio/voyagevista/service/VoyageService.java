@@ -49,6 +49,17 @@ public class VoyageService {
         return updated;
     }
 
+    public void deleteAllVoyages() {
+        voyageRepository.deleteAll();
+        // Log a high-level system action for traceability
+        logChange("Voyage", 0L, "DELETE_ALL", "Cleared all voyages");
+    }
+
+    public void deleteAllAuditLogs() {
+        auditLogRepository.deleteAll();
+        // Do not log here since logs are being cleared
+    }
+
     private void logChange(String entity, Long id, String action, String detail) {
         AuditLog log = new AuditLog();
         log.setEntityName(entity);
