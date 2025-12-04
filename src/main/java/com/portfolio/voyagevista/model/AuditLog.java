@@ -21,4 +21,7 @@ public class AuditLog {
     private String changedBy;  // Mock user for this demo
     private LocalDateTime timestamp;
     private String details;    // "Changed status from Active to Cancelled"
+
+    // Session isolation key
+    private String sessionId;
 }

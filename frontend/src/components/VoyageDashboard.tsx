@@ -4,7 +4,27 @@ import { Voyage, AuditLog } from '../types';
 
 // Determine API base URL from env or fall back to deployed Render URL
 const API_BASE = import.meta.env.VITE_API_URL || 'https://auditsystem-jwb6.onrender.com';
+
+// Create/get a stable per-browser session id
+function getSessionId(): string {
+    const key = 'vv_session_id';
+    let sid = localStorage.getItem(key);
+    if (!sid) {
+        sid = (typeof crypto !== 'undefined' && 'randomUUID' in crypto)
+            ? crypto.randomUUID()
+            : 'sess_' + Math.random().toString(36).slice(2);
+        localStorage.setItem(key, sid);
+    }
+    return sid;
+}
+
 const api = axios.create({ baseURL: API_BASE });
+// Attach X-Session-Id header on all requests
+api.interceptors.request.use((config) => {
+    config.headers = config.headers || {};
+    (config.headers as any)['X-Session-Id'] = getSessionId();
+    return config;
+});
 
 export const VoyageDashboard: React.FC = () => {
     const [voyages, setVoyages] = useState<Voyage[]>([]);

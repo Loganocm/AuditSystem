@@ -23,4 +23,7 @@ public class Voyage {
 
     // "Active", "Completed", "Cancelled", "Scheduled"
     private String status;
+
+    // Session isolation key
+    private String sessionId;
 }

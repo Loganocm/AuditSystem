@@ -17,7 +17,8 @@ RUN ./gradlew --version || true
 COPY src ./src
 
 # Build Spring Boot fat JAR (skip tests for faster image builds)
-RUN ./gradlew clean bootJar -x test --no-daemon
+# Use Gradle configuration cache for faster subsequent builds in CI
+RUN ./gradlew clean bootJar -x test --no-daemon --configuration-cache
 
 # ---- Runtime stage ----
 FROM eclipse-temurin:17-jre

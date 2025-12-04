@@ -17,35 +17,39 @@ public class VoyageController {
     @Autowired
     private VoyageService voyageService;
 
+    private String sid(String header) { return (header == null || header.isBlank()) ? "public" : header; }
+
     @GetMapping("/voyages")
-    public List<Voyage> getVoyages() {
-        return voyageService.getAllVoyages();
+    public List<Voyage> getVoyages(@RequestHeader(value = "X-Session-Id", required = false) String sessionId) {
+        return voyageService.getAllVoyages(sid(sessionId));
     }
 
     @PostMapping("/voyages")
-    public ResponseEntity<Voyage> createVoyage(@RequestBody Voyage voyage) {
-        return ResponseEntity.ok(voyageService.createVoyage(voyage));
+    public ResponseEntity<Voyage> createVoyage(@RequestHeader(value = "X-Session-Id", required = false) String sessionId,
+                                               @RequestBody Voyage voyage) {
+        return ResponseEntity.ok(voyageService.createVoyage(sid(sessionId), voyage));
     }
 
     @PutMapping("/voyages/{id}")
-    public ResponseEntity<Voyage> updateVoyage(@PathVariable Long id, @RequestBody Voyage voyage) {
-        return ResponseEntity.ok(voyageService.updateVoyage(id, voyage));
+    public ResponseEntity<Voyage> updateVoyage(@RequestHeader(value = "X-Session-Id", required = false) String sessionId,
+                                               @PathVariable Long id, @RequestBody Voyage voyage) {
+        return ResponseEntity.ok(voyageService.updateVoyage(sid(sessionId), id, voyage));
     }
 
     @DeleteMapping("/voyages")
-    public ResponseEntity<Void> deleteAllVoyages() {
-        voyageService.deleteAllVoyages();
+    public ResponseEntity<Void> deleteAllVoyages(@RequestHeader(value = "X-Session-Id", required = false) String sessionId) {
+        voyageService.deleteAllVoyages(sid(sessionId));
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/audit-logs")
-    public List<AuditLog> getAuditLogs() {
-        return voyageService.getAuditLogs();
+    public List<AuditLog> getAuditLogs(@RequestHeader(value = "X-Session-Id", required = false) String sessionId) {
+        return voyageService.getAuditLogs(sid(sessionId));
     }
 
     @DeleteMapping("/audit-logs")
-    public ResponseEntity<Void> deleteAllAuditLogs() {
-        voyageService.deleteAllAuditLogs();
+    public ResponseEntity<Void> deleteAllAuditLogs(@RequestHeader(value = "X-Session-Id", required = false) String sessionId) {
+        voyageService.deleteAllAuditLogs(sid(sessionId));
         return ResponseEntity.noContent().build();
     }
 }

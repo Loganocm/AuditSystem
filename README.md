@@ -16,6 +16,7 @@ VoyageVista is a Full Stack enterprise application designed to manage cruise iti
 * **Automated Audit Trails:** The system utilizes a service-layer interception pattern to log every mutation of the Voyage entity. This ensures compliance and historical tracking without requiring manual input from the user.
 * **Voyage Lifecycle Management:** Create and track voyage statuses (Scheduled -> Active -> Completed).
 * **Bulk Maintenance:** Clear all voyages and/or clear all audit logs via UI buttons (calls DELETE /api/voyages and DELETE /api/audit-logs).
+* **Per-Session Data Isolation (Simple Mode):** Data shown is isolated per browser session using a lightweight session key. The frontend generates a stable UUID stored in localStorage and sends it with each request in the `X-Session-Id` header. The backend stores and filters `Voyage` and `AuditLog` records by this session key. This keeps each user's screen independent without authentication.
 * **Type-Safe Frontend:** Built with TypeScript to ensure reliability and maintainability.
 
 ## How to Run
@@ -38,5 +39,9 @@ VoyageVista is a Full Stack enterprise application designed to manage cruise iti
 - Push to Docker Hub (replace with your Docker ID if different):
   - `docker login`
   - `docker push shxde/voyagevista:latest`
+
+## Build performance on Render/CI
+- Gradle configuration cache is enabled via `gradle.properties` and also explicitly used in the Docker build stage (`--configuration-cache`).
+- This speeds up subsequent builds on Render and other CI/CD systems. If you hit an incompatibility, you can temporarily disable it by removing the flag or setting `org.gradle.configuration-cache=false` in `gradle.properties`.
 
 Instruction: Get this code into a GitHub repository named VoyageVista. This covers the "Java," "TypeScript," "Problem Solving," and specifically the "Audit Traceability" and "Voyage Itinerary" requirements of the job post.
